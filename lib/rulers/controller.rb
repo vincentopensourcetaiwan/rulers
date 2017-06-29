@@ -3,6 +3,8 @@ require "rulers/file_model"
 
 module Rulers
   class Controller
+    include Rulers::Model
+
     def initialize(env)
       @env = env
     end
@@ -13,7 +15,7 @@ module Rulers
 
     def render(view_name, locals = {})
       filename = File.join "app", "views",
-        controller_name, "#{view_name}.html.erb"
+                           controller_name, "#{view_name}.html.erb"
       template = File.read filename
       eruby = Erubis::Eruby.new(template)
       eruby.result locals.merge(:env => env)
